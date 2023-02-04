@@ -1,1 +1,29 @@
-<p>message-panel works!</p>
+<div class="messages-container">
+    <div class="selected-channel">
+        <span>{{selectedChannel}}</span>
+    </div>
+
+    <div class="chat-container scroll-style">
+        <ul class="chat-box chatContainerScroll" *ngFor="let message of chatLatestMessages">
+            <!-- For selected user messages list -->
+            <li class="chat-left" *ngIf="message.userId !== selectedUser">
+                <div class="chat-avatar">
+                    <img src="../../assets/images/{{message.userId}}.png" alt="">
+                    <div class="chat-name">{{message.userId}}</div>
+                </div>
+                <div class="chat-text">{{message.text}}</div>
+                <div class="chat-hour">{{message.datetime | date:'hh:mm'}}</div>
+            </li>
+
+            <!-- For others user messages list -->
+            <li class="chat-right" *ngIf="message.userId === selectedUser">
+                <div class="chat-hour">{{message.datetime | date:'hh:mm'}} <span class="fa fa-check-circle"></span></div>
+                <div class="chat-text">{{message.text}}</div>
+                <div class="chat-avatar">
+                    <img src="../../assets/images/{{message.userId}}.png" alt="">
+                    <div class="chat-name">{{message.userId}}</div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
