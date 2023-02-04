@@ -1,1 +1,19 @@
-<p>user-panel works!</p>
+<div class="users-container">
+    <div class="user-panel">
+        <div class="mb-3">
+            <label>1. Choose your user</label>
+            <select class="form-control" name="user" [(ngModel)]="selectedUser" (ngModelChange)="onSelectedUser()">
+                <option *ngFor="let user of users" [value]="user.name">{{user.name}}</option>
+            </select>
+        </div>
+
+        <div>
+            <p>2. Choose your channel</p>
+            <ul class="users">
+                <li class="channel" *ngFor="let channel of channelList" [ngClass]="{'active-user': selectedItem === channel.channelId}" [value]="channel.name" (click)="onSelectedChannel(channel)">
+                    <span class="name">{{channel.name}}</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
