@@ -11,8 +11,6 @@ export class MessageListComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-
-    console.log('call from child',this.message);
   }
 
 }
