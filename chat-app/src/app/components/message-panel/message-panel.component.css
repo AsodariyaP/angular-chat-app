@@ -28,6 +28,7 @@
 .chat-container {
     position: relative;
     padding: 1rem;
+    background-color: #e0edf7;
 }
 
 .chat-container li.chat-left,
@@ -118,6 +119,11 @@
 }
 
 .scroll-style {
-    max-height: 500px !important;
+    max-height: 400px !important;
+    min-height: 400px !important;
     overflow-y: scroll !important
+}
+
+.send-msg-section {
+    padding: 0.5rem;
 }

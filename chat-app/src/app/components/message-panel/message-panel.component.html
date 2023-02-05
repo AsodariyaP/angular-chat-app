@@ -1,10 +1,19 @@
 <div class="messages-container">
+    <!-- panel-header start -->
     <div class="selected-channel">
         <span>{{selectedChannel}}</span>
     </div>
+    <!-- panel-header end -->
+
+     <!-- read-more-up start -->
+    <div class="pt-0 pb-2 pl-2">
+        <button type="button" class="btn btn-info btn-sm mt-2" (click)="fetchMoreMessages(true)">Read More <i
+                class="fa-solid fa-arrow-up"></i></button>
+    </div>
+     <!-- read-more-up end -->
 
     <div class="chat-container scroll-style">
-        <ul class="chat-box chatContainerScroll" *ngFor="let message of chatLatestMessages">
+        <ul class="chat-box chatContainerScroll" *ngFor="let message of chatLatestMessages let i = index;">
             <!-- For selected user messages list -->
             <li class="chat-left" *ngIf="message.userId !== selectedUser">
                 <div class="chat-avatar">
@@ -17,7 +26,18 @@
 
             <!-- For others user messages list -->
             <li class="chat-right" *ngIf="message.userId === selectedUser">
-                <div class="chat-hour">{{message.datetime | date:'hh:mm'}} <span class="fa fa-check-circle"></span></div>
+                <div class="chat-hour">{{message.datetime | date:'hh:mm'}}
+                    <div *ngIf="message?.isMessageSent === false;else success_status">
+                        <i class="fa fa-exclamation-circle text-danger"></i>
+                        Error
+                    </div>
+                    <ng-template #success_status>
+                        <div>
+                            <i class="fa fa-check-circle text-success"></i>
+                            Sent
+                        </div>
+                    </ng-template>
+                </div>
                 <div class="chat-text">{{message.text}}</div>
                 <div class="chat-avatar">
                     <img src="../../assets/images/{{message.userId}}.png" alt="">
@@ -25,5 +45,19 @@
                 </div>
             </li>
         </ul>
+    </div>
+
+    <!-- read-more-down start -->
+    <div class="pt-0 pb-0 pl-2">
+        <button type="button" class="btn btn-info btn-sm mt-2" (click)="fetchMoreMessages(false)">Read More <i
+                class="fa-solid fa-arrow-down"></i></button>
+    </div>
+     <!-- read-more-down end -->
+
+    <div class="text-right send-msg-section">
+        <textarea class="form-control" rows="3" name="chatText" [(ngModel)]="chatText"
+            placeholder="Type your message here..."></textarea>
+        <button type="button" class="btn btn-info mt-2" (click)="postMessage(chatText)">Send Message <i
+                class="fa-sharp fa-solid fa-paper-plane"></i></button>
     </div>
 </div>
