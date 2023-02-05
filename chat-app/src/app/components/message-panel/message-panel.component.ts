@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { FETCH_LATEST_MESSAGES, POST_MESSAGE, FETCH_MORE_MESSAGES } from '../../graphql/graphql.queries';
 import { SharedService } from '../../services/shared.service';
@@ -10,6 +10,7 @@ import { SharedService } from '../../services/shared.service';
 })
 export class MessagePanelComponent implements OnInit {
 
+  @ViewChild("messagePanel") mPanel = {} as ElementRef;
   chatLatestMessages: any[] = [];
   error: any;
 
@@ -27,6 +28,10 @@ export class MessagePanelComponent implements OnInit {
       this.currentChannelId = data.channelId;
       this.getLatestMessages();
     });
+  }
+
+  ngAfterViewChecked() {
+    this.mPanel.nativeElement.scrollTop = this.mPanel.nativeElement.scrollHeight;
   }
 
   getLatestMessages() {
@@ -91,15 +96,11 @@ export class MessagePanelComponent implements OnInit {
         old: old
       }
     }).subscribe(({ data }: any) => {
-      if (data.fetchMoreMessages.length <= 10) {
-        this.chatLatestMessages = [...this.chatLatestMessages, ...data.fetchMoreMessages];
-      } else {
+      if (data.fetchMoreMessages.length > 0) {
         this.chatLatestMessages = data.fetchMoreMessages;
       }
-      this.chatLatestMessages.sort((a, b) => a.datetime.toLowerCase() > b.datetime.toLowerCase() ? 1 : -1);
     }, (error) => {
       this.error = error;
     });
   }
-
 }
