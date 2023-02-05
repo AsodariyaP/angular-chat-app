@@ -15,36 +15,7 @@
     <!-- message panel start -->
     <div class="chat-container scroll-style" #messagePanel>
         <ul class="chat-box chatContainerScroll" *ngFor="let message of chatLatestMessages let i = index;">
-            <!-- For selected user messages list -->
-            <li class="chat-left" *ngIf="message.userId !== selectedUser">
-                <div class="chat-avatar">
-                    <img src="../../assets/images/{{message.userId}}.png" alt="">
-                    <div class="chat-name">{{message.userId}}</div>
-                </div>
-                <div class="chat-text">{{message.text}}</div>
-                <div class="chat-hour">{{message.datetime | date:'hh:mm'}}</div>
-            </li>
-
-            <!-- For others user messages list -->
-            <li class="chat-right" *ngIf="message.userId === selectedUser">
-                <div class="chat-hour">{{message.datetime | date:'hh:mm'}}
-                    <div *ngIf="message?.isMessageSent === false;else success_status">
-                        <i class="fa fa-exclamation-circle text-danger"></i>
-                        Error
-                    </div>
-                    <ng-template #success_status>
-                        <div>
-                            <i class="fa fa-check-circle text-success"></i>
-                            Sent
-                        </div>
-                    </ng-template>
-                </div>
-                <div class="chat-text">{{message.text}}</div>
-                <div class="chat-avatar">
-                    <img src="../../assets/images/{{message.userId}}.png" alt="">
-                    <div class="chat-name">{{message.userId}}</div>
-                </div>
-            </li>
+            <app-message-list [message]="message" [selectedUser]="selectedUser"></app-message-list>
         </ul>
     </div>
     <!-- message panel end -->

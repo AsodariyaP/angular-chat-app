@@ -40,7 +40,7 @@ export class MessagePanelComponent implements OnInit {
       variables: {
         channelId: this.currentChannelId
       }
-    }).valueChanges.subscribe(({ data, error }: any) => {
+    }).valueChanges.subscribe(({ data }: any) => {
       this.chatLatestMessages = data.fetchLatestMessages.slice().reverse();
     }, (error) => {
       this.error = error;
